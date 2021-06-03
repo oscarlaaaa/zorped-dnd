@@ -60,6 +60,9 @@ public class Bot {
       });
 
       commands.put("roll", event -> DnD.roll(event));
+      commands.put("skill", event -> DnD.skill(event));
+      commands.put("addPlayer", event -> DnD.addPlayer(event));
+      commands.put("removePlayer", event -> DnD.removePlayer(event));
 
       // builds the client and logs in
       GatewayDiscordClient client = DiscordClientBuilder
