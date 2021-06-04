@@ -64,6 +64,8 @@ public class Bot {
       commands.put("addPlayer", event -> DnD.addPlayer(event));
       commands.put("removePlayer", event -> DnD.removePlayer(event));
 
+      commands.put("reminder", event -> Schedule.setReminder(event));
+
       // builds the client and logs in
       GatewayDiscordClient client = DiscordClientBuilder
             .create("ODQ5NzQ2MzgwMTgzNDM3MzYy.YLfp_A.dLo82O_4KJZiVV1-wWlYSyEpRvw").build().login().block();
