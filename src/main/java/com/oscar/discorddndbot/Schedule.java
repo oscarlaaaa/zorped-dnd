@@ -11,8 +11,12 @@ public class Schedule {
 
   private static List<Reminder> events;
 
-  public Schedule() {
+  static {
     events = new ArrayList<Reminder>();
+  }
+
+  public Schedule() {
+    // Not to be used
   }
 
   public static void setReminder(MessageCreateEvent event) {

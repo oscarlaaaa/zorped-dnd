@@ -1,6 +1,7 @@
 package com.oscar.discorddndbot;
 
 import java.time.LocalDate;
+import java.util.TimerTask;
 
 public class Reminder implements Comparable<Reminder> {
 
@@ -32,6 +33,7 @@ public class Reminder implements Comparable<Reminder> {
     this.message = message;
 
   }
+
 
   public int getYear() {
     return year;
