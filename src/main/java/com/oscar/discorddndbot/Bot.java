@@ -77,7 +77,7 @@ public class Bot {
     commands.put("reminderhelp", event -> Schedule.reminderHelp(event));
 
     // builds the client and logs in
-    GatewayDiscordClient client = DiscordClientBuilder.create("ODQ5NzQ2MzgwMTgzNDM3MzYy.YLfp_A.3fPPP59Hv9m84xDKlwwaNPGTTE8").build().login().block();
+    GatewayDiscordClient client = DiscordClientBuilder.create("placeholder").build().login().block();
 
 
     // Creates task that checks tasks, and prints all of them
