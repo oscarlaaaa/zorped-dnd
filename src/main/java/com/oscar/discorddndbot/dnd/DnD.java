@@ -1,8 +1,11 @@
-package com.oscar.discorddndbot;
+package com.oscar.discorddndbot.dnd;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import com.oscar.discorddndbot.music.Player;
+
 import java.util.Random;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.VoiceState;

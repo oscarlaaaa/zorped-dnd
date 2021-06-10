@@ -1,4 +1,4 @@
-package com.oscar.discorddndbot;
+package com.oscar.discorddndbot.reminders;
 
 import java.util.ArrayList;
 import java.util.Arrays;

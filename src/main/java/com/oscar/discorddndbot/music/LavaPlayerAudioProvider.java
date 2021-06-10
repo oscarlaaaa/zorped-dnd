@@ -1,4 +1,4 @@
-package com.oscar.discorddndbot;
+package com.oscar.discorddndbot.music;
 
 import java.nio.ByteBuffer;
 
