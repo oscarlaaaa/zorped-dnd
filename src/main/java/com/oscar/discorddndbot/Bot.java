@@ -70,13 +70,17 @@ public class Bot {
     commands.put("addPlayer", event -> DnD.addPlayer(event));
     commands.put("removePlayer", event -> DnD.removePlayer(event));
 
-    commands.put("reminder", event -> Schedule.setReminder(event));
+    // All reminder-related commands
+    commands.put("setreminder", event -> Schedule.setReminder(event));
+    commands.put("deletereminder", event -> Schedule.deleteReminder(event));
+    commands.put("displayreminders", event -> Schedule.displayReminders(event));
+    commands.put("reminderhelp", event -> Schedule.reminderHelp(event));
 
     // builds the client and logs in
-    GatewayDiscordClient client = DiscordClientBuilder.create("token_placeholder").build().login().block();
+    GatewayDiscordClient client = DiscordClientBuilder.create("ODQ5NzQ2MzgwMTgzNDM3MzYy.YLfp_A.3fPPP59Hv9m84xDKlwwaNPGTTE8").build().login().block();
 
 
-    // Creates task that spams channel
+    // Creates task that checks tasks, and prints all of them
     class ReminderTask extends TimerTask {
       TextChannel channel;
 
@@ -85,7 +89,11 @@ public class Bot {
       }
 
       public void run() {
-        channel.createMessage("testing to spam this channel").block();
+        if (Schedule.getEvents().size() != 0 && Schedule.getEvents().get(0).readyToRemind(Schedule.currentTime())) {
+          channel.createMessage("Reminder for: " + Schedule.getEvents().get(0).toString()).block();
+        } else {
+          channel.createMessage("No reminders to remind yet.").block();
+        }
       }
     }
 
@@ -99,8 +107,12 @@ public class Bot {
       TextChannel botChannelText = botChannelRaw.cast(TextChannel.class).block();
 
       Timer test = new Timer();
-      int sec = 5;
-      test.schedule(new ReminderTask(botChannelText), 0, sec * 1000);
+
+      // check the time/date every minute
+      int sec = 60;
+
+      ReminderTask checkReminders = new ReminderTask(botChannelText);
+      test.schedule(checkReminders, 0, sec * 1000);
     });
 
     client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(event -> {
