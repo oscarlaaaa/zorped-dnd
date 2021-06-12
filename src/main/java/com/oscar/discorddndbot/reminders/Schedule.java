@@ -98,8 +98,8 @@ public class Schedule {
                 + "\tTo use setreminder: !setreminder YYYY-MM-DD(numerical) HH:MM(24-hour clock) message-goes-here\n\n"
                 + "<!deletereminder - deletes a reminder with the first word of the message being the input.>\n"
                 + "\tTo use deletereminder: !deletereminder keyword\n\n"
-                + "<!displayreminders - displays a list of all stored reminders.>\n"
-                + "\tTo use displayreminders: !displayreminders\n```")
+                + "<!displayallreminders - displays a list of all stored reminders.>\n"
+                + "\tTo use displayallreminders: !displayallreminders\n```")
         .block();
   }
 

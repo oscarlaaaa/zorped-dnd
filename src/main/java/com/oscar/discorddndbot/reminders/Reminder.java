@@ -1,6 +1,5 @@
 package com.oscar.discorddndbot.reminders;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
