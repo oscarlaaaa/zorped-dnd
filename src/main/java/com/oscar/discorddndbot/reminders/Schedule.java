@@ -35,7 +35,7 @@ public class Schedule {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
       myConnection = DriverManager.getConnection(
-          "jdbc:mysql://b659e9727d513b:47503661@us-cdbr-east-04.cleardb.com/heroku_f64027d6875ce57?reconnect=true");
+          "xd");
 
       System.out.println("Connection with SQL database established!");
 
