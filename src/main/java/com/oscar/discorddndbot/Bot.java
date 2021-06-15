@@ -23,6 +23,8 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Bot {
 
   private static final Map<String, Command> commands = new HashMap<>();
@@ -73,7 +75,8 @@ public class Bot {
     commands.put("reminderhelp", event -> Schedule.reminderHelp(event));
 
     // builds the client and logs in
-    GatewayDiscordClient client = DiscordClientBuilder.create("xdxd").build().login().block();
+    Dotenv dotenv = Dotenv.load();
+    GatewayDiscordClient client = DiscordClientBuilder.create(dotenv.get("DISCORD_BOT_TOKEN")).build().login().block();
 
     client.getEventDispatcher().on(ReadyEvent.class).subscribe((event) -> {
       final User self = event.getSelf();

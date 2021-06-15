@@ -20,48 +20,36 @@ public class Reminder {
 
   /** 
    * Constructor for a Reminder object; takes in ints for year-month-day, Strings for time and message.
+   * Used to easily store queried reminders without having to access the MySQL server every time
    * 
    * @param datetime - what time the reminder's event is set to occur in the format of HH:MM (24-hour format)
    * @param message - the reminder message to be stored
-   * 
    */
   public Reminder(LocalDateTime dateTime, String message) throws IllegalArgumentException {
-    // REMINDER: Need to add a check for time as well
     this.dateTime = dateTime;
     this.message = message;
   }
 
+  /**
+   * Getter for a reminder's date-time.
+   * @return - LocalDateTime object from the reminder.
+   */
   public LocalDateTime getDateTime() {
     return dateTime;
   }
 
+  /**
+   * Getter for a reminder's message.
+   * @return - the reminder's message in String object form.
+   */
   public String getMessage() {
     return message;
   }
 
-  // /** 
-  //  * Compares the reminder with a ZonedDateTime to see if it is ready to be reminded. 
-  //  * 
-  //  * @param zdt - a ZonedDateTime of the current date/time
-  //  * @return boolean - true if zdt day matches current date
-  //  */
-  // public boolean readyToRemind(ZonedDateTime zdt) {
-  //   Reminder comparethis = new Reminder(zdt.getYear(), zdt.getMonthValue(), zdt.getDayOfMonth(), "", "");
-  //   return (this.compareTo(comparethis) == 0);
-  // }
-
-  // @Override
-  // public int compareTo(Reminder r) {
-  //   if (this.year < r.getYear() || (this.year == r.getYear() && this.month < r.getMonth())
-  //   || this.year == r.getYear() && this.month == r.getMonth() && this.day < r.getDay()) {
-  //     return -1;
-  //   } else if (this.year == r.getYear() && this.month == r.getMonth() && this.day == r.getDay()){
-  //     return 0;
-  //   } else {
-  //     return 1;
-  //   }
-  // }
-
+  /**
+   * New toString method formatted in my preferred way to display them.
+   * @return - the reminder formatted into a String object.
+   */
   @Override
   public String toString() {
     return dateTime.toString() + ": " + message;

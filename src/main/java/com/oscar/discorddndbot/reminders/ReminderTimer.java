@@ -24,29 +24,30 @@ public class ReminderTimer {
   }
 
   /**
-   * Starts the timer to repopulate the reminder list every 24 hours
+   * Starts the timer to repopulate the reminder list every 24 hours.
    * @throws Exception - no client set
    */
   public void startPopulateList() throws Exception {
     if (client == null) throw new Exception("Client has not been set yet.");
 
     Timer populateReminderListTimer = new Timer();
-    int day = 86400;
+    // int day = 86400;
+    int day = 10;
     PopulateTask populateList = new PopulateTask();
     populateReminderListTimer.schedule(populateList, 0, day * 1000);
   }
 
     /**
-   * Starts the timer to check the reminder list every hour for events within 5 hours of being due
+   * Starts the timer to check the reminder list every hour for events within 5 hours of being due.
    * @throws Exception - no client set
    */
   public void startEventTimers() throws Exception {
     if (client == null) throw new Exception("Client has not been set yet.");
 
     Timer eventReminderTimer = new Timer();
-    int sec = 3600;
+    // int sec = 3600;
+    int sec = 5;
     ReminderTask checkReminders = new ReminderTask(botChannelText);
     eventReminderTimer.schedule(checkReminders, 0, sec * 1000);
   }
-
 }

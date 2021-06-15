@@ -17,6 +17,8 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.entity.channel.TextChannel;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Schedule {
 
   /**
@@ -30,12 +32,13 @@ public class Schedule {
   static {
     // Instantiate the events arraylist
     events = new ArrayList<Reminder>();
+    Dotenv dotenv = Dotenv.load();
 
     // Connecting to SQL Database
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
       myConnection = DriverManager.getConnection(
-          "xd");
+          dotenv.get("MYSQL_CREDENTIAL"));
 
       System.out.println("Connection with SQL database established!");
 
@@ -62,16 +65,21 @@ public class Schedule {
     return events;
   }
 
+  /**
+   * Populates the event list with events due within the next 24 hours.
+   * Connects to the MySQL server as connected in the above static definition to pull reminder events in a sorted order.
+   */
   public static void populateEvents() {
-
     // Clears event list of previous events
     events.clear();
 
+    // Queries events in SQL where due dates are within 24 hours in the future; order by due date and due time
     try {
       String reminderSql = "SELECT * FROM reminders WHERE due_date >= CURDATE() AND due_date < CUR_DATE() + INTERVAL 1 DAY ORDER BY due_date DESC, due_time DESC;";
       Statement grabNearbyEvents = myConnection.createStatement();
       ResultSet queryResults = grabNearbyEvents.executeQuery(reminderSql);
 
+      // Adds all the queried results into the event list
       while (queryResults.next()) {
         LocalDate date = queryResults.getDate("due_date").toLocalDate();
         LocalTime time = queryResults.getTime("due_time").toLocalTime();
@@ -82,15 +90,20 @@ public class Schedule {
         Reminder reminder = new Reminder(dateTime, message);
         events.add(reminder);
       }
-
       System.out.println("Events added!");
 
     } catch (Exception e) {
       System.out.println("Error with grabbing events.");
     }
-
   }
 
+  /** 
+   * Sends a message to the channel about the various commands and how to use the bot.
+   * Takes in a message event and sends a message to the channel about how to use the bot including
+   * the various commands, the formatting of the commands, and the keywords to use.
+   * 
+   * @param event - the MessageCreateEvent from the channel calling this function
+   */
   public static void reminderHelp(MessageCreateEvent event) {
     event.getMessage().getChannel().block()
         .createMessage(
@@ -103,11 +116,17 @@ public class Schedule {
         .block();
   }
 
+  /**
+   * Inputs the requested reminder into the MySQL server and re-calls the populateEvents method.
+   * Checks for valid inputs before querying the MySQL server to insert a reminder entry for that reminder (to be finished).
+   * 
+   * @param event - the MessageCreateEvent from the channel calling this function
+   */
   public static void setReminder(MessageCreateEvent event) {
     String content = event.getMessage().getContent();
     Scanner scan = new Scanner(content);
 
-    // Get rid of initial "schedule" command
+    // Get rid of initial "!schedule" command
     scan.next();
 
     // Extract the date input
@@ -129,13 +148,12 @@ public class Schedule {
 
     // Extract the message
     String message = "\"";
-
     while (scan.hasNext()) {
       message += scan.next() + " ";
     }
-
     message += "\"";
 
+    // Query the MySQL server to insert the reminder
     try {
       PreparedStatement input = myConnection.prepareStatement("INSERT INTO reminders (due_date, due_time, message) values (?, ?, ?);");
       input.setDate(1, sqlDate);
@@ -143,15 +161,18 @@ public class Schedule {
       input.setString(3, message);
       input.executeUpdate();
       input.close();
-      
       event.getMessage().getChannel().block().createMessage("Reminder added!").block();
     } catch (SQLException e) {
       event.getMessage().getChannel().block().createMessage("Failed to add reminder.").block();
     }
-
     scan.close();
   }
 
+  /**
+   * Deletes the reminder from the list of reminders (TO BE REWORKED FOR MYSQL).
+   * 
+   * @param event - the MessageCreateEvent from the channel calling this function
+   */
   public static void deleteReminder(MessageCreateEvent event) {
     String content = event.getMessage().getContent();
     Scanner scan = new Scanner(content);
@@ -180,6 +201,12 @@ public class Schedule {
     scan.close();
   }
 
+  /**
+   * Displays all reminders currently stored for the 24-hour period (TO BE REWORKED INTO
+   * CALLING ALL REMINDERS FROM THE MYSQL DATABASE).
+   * 
+   * @param event - the MessageCreateEvent from the channel calling this function
+   */
   public static void displayAllReminders(MessageCreateEvent event) {
     MessageChannel channel = event.getMessage().getChannel().block();
     if (events.size() == 0) {
@@ -193,6 +220,11 @@ public class Schedule {
     }
   }
 
+  /**
+   * The periodic rmeinder call that displays all reminders scheduled for the regular time period.
+   * 
+   * @param channel - the TextChannel to send the regularly scheduled messages into
+   */
   public static void displayReminders(TextChannel channel) {
     if (events.size() == 0) {
       channel.createMessage("You have no reminders scheduled.").block();
@@ -205,6 +237,11 @@ public class Schedule {
     }
   }
 
+  /**
+   * Returns the current time for the Vancouver/BC time zone.
+   * 
+   * @return a ZonedDateTime instance for comparison against reminder due dates/times.
+   */
   public static ZonedDateTime currentTime() {
     return ZonedDateTime.now(ZoneId.of("GMT-7"));
   }
