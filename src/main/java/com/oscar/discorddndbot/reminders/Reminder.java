@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
  */
 public class Reminder {
 
+  /** Index of the reminder in the MySQL server to allow for easy access/update/deletion */
+  private int index;
+
   /** Date and Time set for the reminder to be parsed as LocalTime in Schedule */
   private LocalDateTime dateTime;
 
@@ -25,9 +28,19 @@ public class Reminder {
    * @param datetime - what time the reminder's event is set to occur in the format of HH:MM (24-hour format)
    * @param message - the reminder message to be stored
    */
-  public Reminder(LocalDateTime dateTime, String message) throws IllegalArgumentException {
+  public Reminder(int index, LocalDateTime dateTime, String message) throws IllegalArgumentException {
+    this.index = index;
     this.dateTime = dateTime;
     this.message = message;
+  }
+
+  
+  /**
+   * Getter for a reminder's index.
+   * @return - the primitive int index.
+   */
+  public int getIndex() {
+    return index;
   }
 
   /**

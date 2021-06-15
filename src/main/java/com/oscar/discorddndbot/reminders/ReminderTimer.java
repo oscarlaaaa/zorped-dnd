@@ -46,7 +46,7 @@ public class ReminderTimer {
 
     Timer eventReminderTimer = new Timer();
     // int sec = 3600;
-    int sec = 5;
+    int sec = 15;
     ReminderTask checkReminders = new ReminderTask(botChannelText);
     eventReminderTimer.schedule(checkReminders, 0, sec * 1000);
   }
