@@ -71,9 +71,9 @@ public class Bot {
     // All reminder-related commands
     commands.put("setreminder", event -> Schedule.setReminder(event));
     commands.put("deletereminder", event -> Schedule.deleteReminder(event));
+    commands.put("deleteallreminders", event -> Schedule.deleteAllReminders(event));
     commands.put("displayallreminders", event -> Schedule.displayAllReminders(event));
     commands.put("reminderhelp", event -> Schedule.reminderHelp(event));
-    commands.put("deleteallreminders", event -> Schedule.deleteAllReminders(event));
 
     // builds the client and logs in
     Dotenv dotenv = Dotenv.load();

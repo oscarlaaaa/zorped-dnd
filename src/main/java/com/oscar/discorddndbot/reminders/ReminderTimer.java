@@ -31,8 +31,8 @@ public class ReminderTimer {
     if (client == null) throw new Exception("Client has not been set yet.");
 
     Timer populateReminderListTimer = new Timer();
-    // int day = 86400;
-    int day = 10;
+    int day = 86400;
+    // int day = 10; // for Testing purposes
     PopulateTask populateList = new PopulateTask();
     populateReminderListTimer.schedule(populateList, 0, day * 1000);
   }
@@ -45,8 +45,8 @@ public class ReminderTimer {
     if (client == null) throw new Exception("Client has not been set yet.");
 
     Timer eventReminderTimer = new Timer();
-    // int sec = 3600;
-    int sec = 15;
+    int sec = 3600;
+    // int sec = 15;  // for Testing purposes
     ReminderTask checkReminders = new ReminderTask(botChannelText);
     eventReminderTimer.schedule(checkReminders, 0, sec * 1000);
   }
