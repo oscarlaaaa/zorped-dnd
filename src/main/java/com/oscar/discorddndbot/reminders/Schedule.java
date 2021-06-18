@@ -17,7 +17,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.entity.channel.TextChannel;
 
-import io.github.cdimascio.dotenv.Dotenv;
+// import io.github.cdimascio.dotenv.Dotenv;
 
 /**
  * Static Schedule class that handles all the functionality regarding reminders.
@@ -43,13 +43,13 @@ public class Schedule {
   static {
     // Instantiate the events arraylist
     events = new ArrayList<Reminder>();
-    Dotenv dotenv = Dotenv.load();
+    // Dotenv dotenv = Dotenv.load(); // for local use
 
     // Connecting to SQL Database
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
-      System.out.println(dotenv.get("MYSQL_CREDENTIAL"));
-      myConnection = DriverManager.getConnection(dotenv.get("MYSQL_CREDENTIAL"));
+      System.out.println(System.getenv("CLEARDB_DATABASE_URL"));
+      myConnection = DriverManager.getConnection(System.getenv("MYSQL_CREDENTIAL"));
 
       System.out.println("Connection with SQL database established!");
 

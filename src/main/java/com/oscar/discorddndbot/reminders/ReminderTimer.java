@@ -18,7 +18,7 @@ public class ReminderTimer {
 
   public ReminderTimer(GatewayDiscordClient disc) {
     client = disc;
-    Snowflake x = Snowflake.of("826195539824607262");
+    Snowflake x = Snowflake.of(System.getenv("DISCORD_OUTPUT_CHANNEL"));
     Mono<Channel> botChannelRaw = this.client.getChannelById(x);
     botChannelText = botChannelRaw.cast(TextChannel.class).block();
   }
