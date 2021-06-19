@@ -49,8 +49,7 @@ public class Schedule {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
       // String dburl = System.getenv("CLEARDB_DATABASE_URL");
-      // String dburl = dotenv.get("CLEARDB_DATABASE_URL");
-      String dburl = "jdbc:mysql://b659e9727d513b:47503661@us-cdbr-east-04.cleardb.com/heroku_f64027d6875ce57?reconnect=true";
+      String dburl = dotenv.get("CLEARDB_DATABASE_URL");
       myConnection = DriverManager.getConnection(dburl);
 
       System.out.println("Connection with SQL database established!");
