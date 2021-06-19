@@ -19,7 +19,7 @@ functionalities to groups looking to plan DnD events together.
 - MySQL (clearDB)
 
 ## Configuration
-This project is currently gets hosted locally run through the command line. You can use this bot either locally or remotely, depending on preference.
+This project is currently gets hosted locally run through the command line, with the required tokens being stored in a local .env file in the root folder. You can use this bot either locally or remotely, depending on preference.
 ### Locally
 1. Clone the repository
 2. Edit the placeholder value in Bot.java for the discord bot token to your own (learn how to create one at https://www.writebots.com/discord-bot-token/)
