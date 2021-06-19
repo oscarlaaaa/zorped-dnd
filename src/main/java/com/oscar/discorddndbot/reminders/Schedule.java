@@ -48,8 +48,8 @@ public class Schedule {
     // Connecting to SQL Database
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
-      System.out.println(System.getenv("CLEARDB_DATABASE_URL"));
-      myConnection = DriverManager.getConnection(System.getenv("MYSQL_CREDENTIAL"));
+      String dburl = System.getenv("CLEARDB_DATABASE_URL");
+      myConnection = DriverManager.getConnection(dburl);
 
       System.out.println("Connection with SQL database established!");
 

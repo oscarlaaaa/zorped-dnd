@@ -77,7 +77,8 @@ public class Bot {
 
     // builds the client and logs in
     // Dotenv dotenv = Dotenv.load(); // for local use
-    GatewayDiscordClient client = DiscordClientBuilder.create(System.getenv("DISCORD_BOT_TOKEN")).build().login().block();
+    String token = System.getenv("DISCORD_BOT_TOKEN");
+    GatewayDiscordClient client = DiscordClientBuilder.create(token).build().login().block();
 
     client.getEventDispatcher().on(ReadyEvent.class).subscribe((event) -> {
       final User self = event.getSelf();
