@@ -80,7 +80,8 @@ public class Bot {
     // Dotenv dotenv = Dotenv.load(); // for local use
     // String token = dotenv.get("DISCORD_BOT_TOKEN");
     
-    String token = System.getenv("DISCORD_BOT_TOKEN");
+    // String token = System.getenv("DISCORD_BOT_TOKEN");
+    String token = "ODQ5NzQ2MzgwMTgzNDM3MzYy.YLfp_A.bilvv3BtwRZmCgiliSzsy-eqSaQ";
     GatewayDiscordClient client = DiscordClientBuilder.create(token).build().login().block();
 
     client.getEventDispatcher().on(ReadyEvent.class).subscribe((event) -> {
