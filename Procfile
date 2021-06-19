@@ -1,1 +1,1 @@
-Worker: java src\main\java\com\oscar\discorddndbot\Bot.java
+Worker: java -jar dnddiscordbot-1.0.jar

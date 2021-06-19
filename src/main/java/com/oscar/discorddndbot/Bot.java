@@ -9,6 +9,7 @@ import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.voice.AudioProvider;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.*;
 
@@ -77,6 +78,8 @@ public class Bot {
 
     // builds the client and logs in
     // Dotenv dotenv = Dotenv.load(); // for local use
+    // String token = dotenv.get("DISCORD_BOT_TOKEN");
+    
     String token = System.getenv("DISCORD_BOT_TOKEN");
     GatewayDiscordClient client = DiscordClientBuilder.create(token).build().login().block();
 

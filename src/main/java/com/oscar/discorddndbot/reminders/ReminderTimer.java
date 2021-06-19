@@ -8,6 +8,8 @@ import discord4j.core.object.entity.channel.Channel;
 import discord4j.core.object.entity.channel.TextChannel;
 import reactor.core.publisher.Mono;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class ReminderTimer {
 
   /** Discord client to grab channels and such from */
@@ -18,7 +20,9 @@ public class ReminderTimer {
 
   public ReminderTimer(GatewayDiscordClient disc) {
     client = disc;
+    Dotenv hello = Dotenv.load();
     String output = System.getenv("DISCORD_OUTPUT_CHANNEL");
+    // String output = hello.get("DISCORD_OUTPUT_CHANNEL");
     Snowflake x = Snowflake.of(output);
     Mono<Channel> botChannelRaw = this.client.getChannelById(x);
     botChannelText = botChannelRaw.cast(TextChannel.class).block();
